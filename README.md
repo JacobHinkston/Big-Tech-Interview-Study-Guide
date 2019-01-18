@@ -3,17 +3,22 @@
 	This repo was made for opportunity. Anyone who has the opportunity to interview at Google knows the amount of work you have to put in to get it. I want everyone to be able to share this opportunity. So I made a repo with all the work that I have done to showcase what you might expect, and how to better prepare for it. Best of luck!
 </p>
 
-<p>See extra resources here, of relating to the interview process:</p>
+<p>See extra resources here, of relating to the interview process and how to succeed:</p>
 <ul>
 	<li><a href="https://github.com/JacobHinkston/Google-Interview-Cheatsheats-and-Practice/blob/master/%5BGoogle%20Interview%20Prep%20Guide%5D%20SWE.pdf">Google Interview Prep Guide [PDF]</a></li>
-	<li><a href="https://github.com/jwang5675/ctci/blob/master/Cracking%20the%20Coding%20Interview%206th%20Edition.pdf">Cracking the Coding Interview (6th Edition) [PDF]</a></li>
-	<li><a href="https://github.com/JacobHinkston/Google-Interview-Cheatsheets-and-Practice/blob/master/Algorithms/Introduction%20to%20Algorithms.pdf">Introduction to Algorithms</a></li>
+	<li><a href="https://medium.freecodecamp.org/coding-interviews-for-dummies-5e048933b82b">The 30 Minute Guide to rocking your next coding interview.</a></li>
 
 </ul>
-<p>The interviewer will be evaluating your:</p>
-
+<p>Other study resources:</p>
 <ul>
-	<li>Coding ability in Javascript</li>
+	<li><a href="https://github.com/jwang5675/ctci/blob/master/Cracking%20the%20Coding%20Interview%206th%20Edition.pdf">Cracking the Coding Interview (6th Edition) [PDF]</a></li>
+	<li><a href="https://github.com/JacobHinkston/Google-Interview-Cheatsheets-and-Practice/blob/master/Algorithms/Introduction%20to%20Algorithms.pdf">Introduction to Algorithms</a></li>
+	<li><a href = "https://www.youtube.com/channel/UCKvwPt6BifPP54yzH99ff1g">Kevin Naughton Jr.</a></li>
+</ul>
+
+<p>The interviewer will be evaluating your:</p>
+<ul>
+	<li>Coding ability in <i>[What ever language you picked]</i>. Recommended C/C++, GO, Java or Objective-C.</li>
 	<li>Data structures and algorithms</li>
 	<li>Problem solving & communication skills</li>
 </ul>
