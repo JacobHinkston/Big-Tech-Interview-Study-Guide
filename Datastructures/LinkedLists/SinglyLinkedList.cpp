@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 using namespace std;
 
 struct Node {
@@ -20,68 +21,41 @@ class SinglyLinkedList {
             } else { // If there isnt a head pointer, point the head to the new node.
                 head = newNode; 
             }
-            cout << "Node with data" << data << ", has been added." << endl;
+            cout << "Node with data " << data << ", has been added." << endl;
         }
         void printList(){
             if(head) { // IF there is a head pointer, meaning if the LL had been initialized with another item.
                 for(Node* c = head; c; c=c->next){ //Node* c points to the head pointer, while there is a current node, go to the next;
-                    printf("%i", c->data); 
-                    if(c->next) printf("->");
+                    cout << c->data; 
+                    if(c->next) cout << "->";
                 }
+                cout << endl;
             } else { // If there isnt a head pointer, point the head to the new node.
                 cout << "There are no nodes in this list." << endl;
             }
-            printf("\n");
         }
-        void deleteNode(int data, bool deleteAll){
-            if(deleteAll){
-                cout << "Delete all needs to be implemented." << endl;
-                // TODO: Implement
-                // if(head) { //If there is a list.
-                //     Node* temp = NULL; // Temp node to store the node before current.
-                //     for(Node* c = head; c; c=c->next){ //Goal is to delete all nodes with the specified node 'data', so we are going to iterate over the entire list and delete all.
-                //         if(c==head && ){ 
-                //             if(c->data == data){
-                                
-                //             }  //If you are at the head, and the head's data is also equal to 'data'.
-                //             if(c->next) head = c->next // If you are at the head, and there is more than one item. 
-                //             else {  // If you are at the head, but that is the only item in the list.
-                //                 temp = head;
-                //                 head = NULL; 
-                //             }
-                //         } else {
-                //              
-                //         }
-                //         delete tempNode;
-                //         printf("Node(s) with value, %i, has been deleted. \n", data);
-                //         temp=c;
-                //     }
-                // } else { //If there isnt a list.
-                //     printf("There are no nodes in this list.");
-                // }
-            } else {
-                if(head){
-                    Node* c = head;
-                    Node* temp = head;
-                    while(c && c->data != data){
-                        temp = c;
-                        c=c->next;
-                    };
-                    if(c->data == data){
-                        if(c==head){
-                            if(head->next) head=head->next;
-                            else head = NULL;
-                        }
-                        else if(c->next) temp->next = c->next;
-                        else temp->next = NULL;
-                        delete c;
-                        cout << "The node with data " << data << ", was deleted." << endl;
-                    } else {
-                        cout << "The node with data " << data << ", was not found." << endl;
+        void deleteNode(int data){
+            if(head){
+                Node* c = head;
+                Node* temp = head;
+                while(c && c->data != data){
+                    temp = c;
+                    c=c->next;
+                };
+                if(c->data == data){
+                    if(c==head){
+                        if(head->next) head=head->next;
+                        else head = NULL;
                     }
+                    else if(c->next) temp->next = c->next;
+                    else temp->next = NULL;
+                    delete c;
+                    cout << "The node with data " << data << ", was deleted." << endl;
                 } else {
-                    cout << "There are no nodes in this list." << endl;
+                    cout << "The node with data " << data << ", was not found." << endl;
                 }
+            } else {
+                cout << "There are no nodes in this list." << endl;
             }
         }
         void deleteNodeAtIndex(int index){
@@ -112,6 +86,7 @@ class SinglyLinkedList {
                 cout << "There are no nodes in this list." << endl;
             }
         }
+        
 
     /*
      * CRACKING THE CODING INTERVIEW QUESTIONS.
@@ -128,12 +103,55 @@ class SinglyLinkedList {
      * Implement an Algorithm to find the Kth to last element of a singly linked list.
      */
 
+        void findKToLast(int k){
+            Node* c = head;
+            for(int i = 1; c; i++, c = c->next){
+                if(i==k) cout << "K(" << k << ") to last: ";
+                if(i >= k){
+                    cout << c->data;
+                    if(c->next) cout << "->";
+                }
+            }
+            cout << endl;
+
+        }
+
     /*
      * Interview Question 2.3: Delete Middle Node.
      * Implement an algorithm to delete a node in the middle. 
      * (i.e., any node but the first and the last node, not necessarily the exact middle) of a singly linked list, given only access to that node.
      */
+        int getLength(){
+            int counter = 0;
+            for(Node* c = head; c; c=c->next){
+                counter++;
+            }
+            return counter;
+        }
+        
+        Node* getMiddleNode(){
+            int length = getLength();
+            int midPoint = length/2;
+            int i = 1;
+            Node* c = NULL;
+            for(c = head; c && i <= midPoint; c=c->next) i++;
+            return c;
+        }
 
+        bool deleteMiddle(Node* ptr){
+            if(ptr){
+                Node* ptrTemp = ptr->next;
+                cout << "Deleted node in middle with data, " << ptr->data << "." << endl;
+                ptr->data = ptrTemp->data;
+                ptr->next = ptr->next->next;
+                delete ptrTemp;
+                
+            } else {
+                return false;
+            }
+            return true;
+        }
+        
     /*
      * Interview Question 2.4: Partition.
      * Write code to partition a linkedlist around a value of x, such that all nodes less than x come before all nodes greater than or equal to x.
@@ -143,33 +161,46 @@ class SinglyLinkedList {
      *  Input: 3->5->8->5->10->2->1 (partition = 5)
      *  Output: 3->1->2->10->5->->5->8
      */
-
-    /*
-     * Interview Question 2.5: Sum Lists.
-     * You have two numbers represented by a linkedlist, where each node contains a single digit.
-     * The digits are stored in reverse order, such that the 1s digit is at the head of the list. 
-     * Write a function that adds the two numbers and returns the sum as a linkedlist.
-     * 
-     * EXAMPLE
-     * Input: (7->1->6) + (5->9->2). That is, 617 + 295.
-     * Output: 2->1->9. That is, 912.
-     * 
-     * FOLLOW UP
-     * 
-     * Suppose the digits are stored in forward order. Repeat the above problem.
-     * 
-     * EXAMPLE
-     * 
-     * Input: (6->1->7) + (2->9->5). That is, 617 + 295.
-     * Output: 9->1->2. That is, 912.
-     * 
-     */
-    
+        void partition(int p){
+            Node* head_before = NULL;
+            Node* tail_before = NULL;
+            Node* head_after = NULL;
+            Node* tail_after = NULL;
+            Node* c = head;
+            while(c){
+                Node* temp = c;
+                c=c->next;
+                temp->next = NULL;
+                if(temp->data < p){
+                    if(head_before){
+                        tail_before->next = temp;
+                        tail_before = temp;
+                    } else {
+                        head_before = temp;
+                        tail_before = temp;  
+                    }
+                } else {
+                    if(head_after){
+                        tail_after->next = temp;
+                        tail_after = temp;
+                    } else {
+                        head_after = temp;
+                        tail_after = temp;  
+                    }
+                }
+            }
+            tail_before->next = head_after;
+            head = head_before;
+        }
+        
     /*
      * Interview Question 2.6: Palindrone.
      * Implement a function to check if a linkedlist is a plaindrone.
      */
 
+        bool isPalindrone(){
+            
+        }
     /*
      * Interview Question 2.7: Intersection.
      * Given two (singly) linked list, determine if the two lists intersect. Return the intersecting node.
@@ -187,8 +218,9 @@ class SinglyLinkedList {
      * Input: A->B->C->D->E->C [The same C as earlier]
      * Output: C
      */
-
+        Node* getHeadPtr(){ return head; }
     private:
+        
         Node* head;
 };
 
@@ -202,18 +234,46 @@ class SinglyLinkedList {
 *  Output: 2->1->9. That is 912.
 */
 
-void addLists(SinglyLinkedList sslOne, SinglyLinkedList sslTwo){
-
+int sumLists(SinglyLinkedList sslOne, SinglyLinkedList sslTwo){
+    string strOne = "", strTwo = "";
+    for(Node* c = sslOne.getHeadPtr(); c; c = c->next){
+        string strEnd = strOne.substr(0);
+        strOne = to_string(c->data) + strEnd;
+    }
+    for(Node* c = sslTwo.getHeadPtr(); c; c = c->next){
+        string strEnd = strTwo.substr(0);
+        strTwo = to_string(c->data) + strEnd;
+    }
+    return stoi(strOne) + stoi(strTwo);
+    
 }
 int main(int argvc, char* argv[]) {
     SinglyLinkedList singlyLinkedList;
-    singlyLinkedList.addNode(1);
-    singlyLinkedList.addNode(2);
     singlyLinkedList.addNode(3);
+    singlyLinkedList.addNode(5);
+    singlyLinkedList.addNode(8);
+    singlyLinkedList.addNode(5);
+    singlyLinkedList.addNode(10);
+    singlyLinkedList.addNode(2);
+    singlyLinkedList.addNode(1);
     singlyLinkedList.printList();
-    singlyLinkedList.deleteNode(1, false);
-    singlyLinkedList.deleteNode(2, false);
-    singlyLinkedList.deleteNode(3, false);
+    singlyLinkedList.partition(5);
     singlyLinkedList.printList();
+    
+    //sumLists
+    SinglyLinkedList sslOne;
+    sslOne.addNode(7);
+    sslOne.addNode(1);
+    sslOne.addNode(6);
+    
+    SinglyLinkedList sslTwo;
+    sslTwo.addNode(5);
+    sslTwo.addNode(9);
+    sslTwo.addNode(2);
+    
+    cout << sumLists(sslOne, sslTwo);
+    
+    
+
     return 0;
 }
