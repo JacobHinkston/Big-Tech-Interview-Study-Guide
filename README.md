@@ -7,6 +7,7 @@
 <ul>
 	<li><a href="https://github.com/JacobHinkston/Google-Interview-Cheatsheats-and-Practice/blob/master/%5BGoogle%20Interview%20Prep%20Guide%5D%20SWE.pdf">Google Interview Prep Guide [PDF]</a></li>
 	<li><a href="https://medium.freecodecamp.org/coding-interviews-for-dummies-5e048933b82b">The 30 Minute Guide to rocking your next coding interview.</a></li>
+	<li><a href="https://www.anthonydmays.com/blog/2017/01/10/prepare-google-interview-1-month-left/">How should I prepare for my Google interview if I have 1 month left?</a></li>
 
 </ul>
 <p>Other study resources:</p>
