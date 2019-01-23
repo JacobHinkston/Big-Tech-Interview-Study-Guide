@@ -1,4 +1,5 @@
 #include <iostream>
+#include <queue>
 using namespace std;
 
 struct TreeNode{
@@ -20,8 +21,39 @@ class Tree{
             root = NULL;
             numTreeNodes = 0;
         }
+        Tree(int* someArray, int len){
+            bool isSorted = true;
+            int prev = someArray[0];
+            for(int i = 1; i < len; i++){
+                if(!(prev < someArray[i])) isSorted = false;
+            }
+
+            if(isSorted){
+                cout << "Tree initialization overloaded, tree initializing." << endl;
+                root = initBST(someArray, 0, len-1, NULL);
+            } else {
+                cout << "This array is not sorted, couldn't not initialize." << endl;
+            }
+        }
         ~Tree(){ }
+        /*
+        * Interview Question 4.2: Minimal Tree
+        * Given a sorted (increasing order) array with unique integer elements, write an algorithm to create a binary search tree with minimal height.
+        */
+        TreeNode* initBST(int someArray[], int start, int end, TreeNode* parent){
+            if(end < start){
+                return NULL;
+            } else {
+                int mid = (start+end)/2;
+                TreeNode* head = new TreeNode(someArray[mid], parent);
+                head->leftChild = initBST(someArray, start, mid-1, head);
+                head->rightChild = initBST(someArray, mid+1, end, head);
+                return head;
+            }
+        }
+
         TreeNode* getRoot(){ return root; }
+
         void addTreeNode(int data){
             TreeNode* newTreeNode = new TreeNode(data, NULL);
             if(root) {
@@ -49,6 +81,7 @@ class Tree{
             }
             cout << "Node with data, " << data << " has been added to the tree." << endl;
         }
+
         TreeNode* findTreeNode(int data){
             if(root) {
                 bool isRunning = true;
@@ -140,12 +173,57 @@ class Tree{
             }
         }
 
+        void printTree(int order){
+            switch(order){
+                case 0: {
+                    cout << "---- Current Tree in Level-Order Traversal ----" << endl;
+                    levelOrderTraversal(root);
+                    break;
+                } case 1: {
+                    cout << "---- Current Tree in In-Order Traversal ----" << endl;
+                    inOrderTraversal(root);
+                    break;
+                } case 2: {
+                    cout << "---- Current Tree in Pre-Order Traversal ----" << endl;
+                    preOrderTraversal(root);
+                    break;
+                } case 3: {
+                    cout << "---- Current Tree in Post-Order Traversal ----" << endl;
+                    postOrderTraversal(root);
+                    break;
+                } default: {
+                    cout << "---- Printing Instructions ----" << endl;
+                    cout << "arg(0): Level-Order Traversal" << endl;
+                    cout << "arg(1): In-Order Traversal" << endl;
+                    cout << "arg(2): Pre-Order Traversal" << endl;
+                    cout << "arg(3): Post-Order Traversal" << endl;
+                    break;
+                }
+            }
+        }
+
         /*
          * Binary Tree Traversal
          * Traversing a BST (Or any tree for that matter) is very important in big interviews, and will require you to understand the following:
-         * Breadth first:
+         */
+
+        /* Breadth first:
          *  - Level-order Traversal
-         * Depth First:
+         */
+
+        void levelOrderTraversal(TreeNode* head){
+            queue <TreeNode*> treeQueue;
+            treeQueue.push(head);
+            while(!treeQueue.empty()){
+                TreeNode* temp = treeQueue.front();
+                treeQueue.pop();
+                cout << temp->data << " ";
+                if(temp->leftChild) treeQueue.push(temp->leftChild);
+                if(temp->rightChild) treeQueue.push(temp->rightChild);
+            }
+        }
+        
+        /* Depth First:
          *  - In-order Traversal (Most common) <left><root><right>
          *  - Pre-order Traversal <root><left><right>
          *  - Post-Order Traversal <left><right><root>
@@ -154,30 +232,25 @@ class Tree{
         void inOrderTraversal(TreeNode* head){
             if(!head) return;
             inOrderTraversal(head->leftChild);
-            cout << head->data << endl;
+            cout << head->data << " ";
             inOrderTraversal(head->rightChild);
         }
         void preOrderTraversal(TreeNode* head){
             if(!head) return;
-            cout << head->data << endl;
-            inOrderTraversal(head->leftChild);
-            inOrderTraversal(head->rightChild);
+            cout << head->data << " ";
+            preOrderTraversal(head->leftChild);
+            preOrderTraversal(head->rightChild);
         }
         void postOrderTraversal(TreeNode* head){
             if(!head) return;
-            inOrderTraversal(head->leftChild);
-            inOrderTraversal(head->rightChild);
-            cout << head->data << endl;
+            postOrderTraversal(head->leftChild);
+            postOrderTraversal(head->rightChild);
+            cout << head->data << " ";
         }
 
-        /*
-         * Binary Tree Interview Questions:
-         */
-
-        /*
-        * Interview Question 4.2: Minimal Tree
-        * Given a sorted (increasing order) array with unique integer elements, write an algorithm to create a binary search tree with minimal height.
-        */
+      /*
+       * Binary Tree Interview Questions:
+       */
 
        /*
         * Interview Question 4.3: List of depths.
@@ -272,12 +345,22 @@ class Tree{
         int numTreeNodes;
 };
 
+
+
 int main(int argc, char* argv[]){
     Tree tree;
     int testData[7] = {5,3,12,10,9,1,2};
+    
     for(int i = 0; i<7; i++) tree.addTreeNode(testData[i]);
-    tree.inOrderTraversal(tree.getRoot());
+    tree.levelOrderTraversal(tree.getRoot());
     cout << endl;
+
+    int initTree[7] = {1,2,3,4,5,6,7};
+    int len = sizeof(initTree)/sizeof(initTree[0]);
+
+    Tree tree_2(initTree, len);
+    tree_2.printTree(0);
+
 
 
     
